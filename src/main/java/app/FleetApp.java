@@ -1,24 +1,19 @@
 package app;
 
-import app.model.Users;
-import app.repository.UserDAO.UserDao;
+import app.service.DataManager;
 
-import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 public class FleetApp {
     public static void main(String[] args) {
 
-        Users users = new Users(1L,"crisw", "login", "password", Timestamp.from(Instant.now()));
-        UserDao userDao = new UserDao();
-
-        try {
-            userDao.createTable();
-            userDao.insertData(users.getId(), users.getNick(),users.getLogin(), users.getPassword(), users.getInsertTime());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Create: " + users);
+        DataManager dataManager =  new DataManager();
+        dataManager.createTables();
+        dataManager.checkConnection();
+//        dataManager.insertUserData(1L, "nick1", "login1", "password1", Timestamp.valueOf(LocalDateTime.now()));
+//        dataManager.insertVehicleData(1L, "login1", "brand1", "model1", Timestamp.valueOf(LocalDateTime.now()));
+//        dataManager.insertInsuranceData(1L,123456789L, "INSURER", 102.2f, Timestamp.valueOf(LocalDateTime.now()));
+        // odczytać select ID i sparować a następnie ustawić PK i FK w tabeli Identifires?
     }
 }
